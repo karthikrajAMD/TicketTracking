@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Ticket Tracking</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<style>
+.mydiv {
+	padding: 10px;
+}
+
+th {
+	font-size: 20px;
+	width: 250px;
+}
+
+.mt-th {
+	background-image: linear-gradient(to right, #65a42a, #5eb228, #53c028, #40ce2a, #10dd2e);
+}
+
+.my-table {
+	transition: all .5s;
+	animation: slideIn 1.5s ease-in-out forwards;
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(500px) scale(.1);
+  }
+  100% {
+    transform: translateX(0px) scale(1);
+  }
+} 
+</style>
+</head>
+<body>
+	<div class="container">
+		<div class=" table-responsive mt-5 my-table">
+			<div>
+				<a th:href="@{/getAll}"><button type="button" class="btn btn-primary mb-3"><- Back </button></a>
+			</div>
+			<table class="table ">
+				<tr>
+					<th class="mt-th">Title</th>
+					<td><h2 th:text="${ticket.tTitle}"></h2></td>
+				</tr>
+				<tr>
+					<th class="mt-th">Short Description:</th>
+					<td><h2 th:text="${ticket.tShort}"></h2></td>
+				</tr>
+				<tr>
+					<th class="mt-th">Created on:</th>
+					<td><h2 th:text="${ticket.tCreated}"></h2></td>
+				</tr>
+				<tr>
+					<th class="mt-th">Content:</th>
+					<td><div class="myContent"></div></td>
+				</tr>
+
+			</table>
+			
+		</div>
+	</div>
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		var message = /*[[${ticket.tContent}]]*/+"";
+		var myContent = document.querySelector(".myContent");
+		myContent.innerHTML = message;
+		console.log(message);
+	</script>
+</body>
+</html>

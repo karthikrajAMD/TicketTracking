@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Ticket Tracking</title>
+<!-- <link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+	crossorigin="anonymous"> -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+ <link
+	href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css"
+	rel="stylesheet" /> 
+<script
+	src="https://cdn.tiny.cloud/1/ccmz75xdjwi9km28y8naw21c72ye3600lputgc1sajy46e3z/tinymce/6/tinymce.min.js"
+	referrerpolicy="origin"></script>
+<style>
+.action-but {
+	display: flex;
+	/* flex-wrap: wrap; */
+	row-gap: 5px;
+	column-gap: 5px;
+}
+</style>
+
+</head>
+<body bgcolor="tomato">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+		<a class="navbar-brand" href="#">Ticket Tracker Application</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarText" aria-controls="navbarText"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarText">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"><a class="nav-link" href="#">Ticket
+						<!-- <span class="sr-only">(current)</span> -->
+				</a></li>
+				<li class="nav-item"><a class="nav-link"
+					th:href="@{/CreateTicket}">New Ticket</a></li>
+			</ul>
+		</div>
+	</nav>
+	<center>
+		<div class="container">
+			<nav class="navbar navbar-light bg-light">
+				<form class="form-inline" th:action="@{/search}"  method="get">
+					<input class="form-control mr-sm-2" type="search" name="keyword" th:value="${keyword}"
+						placeholder="Search" aria-label="Search">
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+				</form>
+			</nav>
+			<div class="table-responsive ">
+			<table class="table table-bordered">
+				<thead>
+					<tr class="bg-warning">
+						<th scope="col">#</th>
+						<th scope="col">Title</th>
+						<th scope="col">Ticket Short Description</th>
+						<!-- <th>Ticket Content</th> -->
+						<th scope="col">Ticket Created on</th>
+						<th scope="col">Action</th>
+					</tr>
+				</thead>
+				<tbody>
+
+					<tr th:each="ticket,iterator:${AllTicket}">
+						<td th:text="${iterator.index+1}"></td>
+						<td th:text="${ticket.tTitle}"></td>
+						<td th:text="${ticket.tShort}"></td>
+						<td th:text="${ticket.tCreated}"></td>
+						<!-- <td th:text="${ticket.tContent}"></td> -->
+						<td>
+							 <div class="action-but">
+								<div>
+									<a action="#" th:href="@{/UpdateTicket/(tId=${ticket.id})}">
+										<input type="hidden" name="tId" th:value="${ticket.id}">
+										<button type="button" class="btn btn-primary">Update</button>
+									</a>
+								</div>
+								<div>
+									<a action="#" onclick= "return confirm('Are you sure want to delete?')" th:href="@{/delete/(ticketId=${ticket.id})}">
+										<button type="button" class="btn btn-danger">Delete</button>
+									</a>
+									
+								</div>
+								<div>
+									<a action="#"  th:href="@{/view/(tId=${ticket.id})}">
+										<button type="button" class="btn btn-info">View</button>
+									</a>
+								</div>
+							</div> 
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			
+			</div>
+		</div>
+
+	</center>
+	<script>
+	function deleteRecord(){
+		 if (!confirm("are you sure")) {
+			    alert("Thank you");
+			  }
+		
+	}
+	</script>
+</body>
+</html>
